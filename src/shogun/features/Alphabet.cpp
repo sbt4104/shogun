@@ -1,7 +1,7 @@
 /*
  * This software is distributed under BSD 3-clause license (see LICENSE file).
  *
- * Authors: Soeren Sonnenburg, Heiko Strathmann, Weijie Lin, Bjoern Esser, 
+ * Authors: Soeren Sonnenburg, Heiko Strathmann, Weijie Lin, Bjoern Esser,
  *          Evangelos Anagnostopoulos, Leon Kuchenbecker, Saurabh Goyal
  */
 
@@ -740,7 +740,7 @@ void CAlphabet::init()
 			"Histogram."); */
 }
 
-void CAlphabet::load_serializable_post() throw (ShogunException)
+void CAlphabet::load_serializable_post() noexcept(false)
 {
 	CSGObject::load_serializable_post();
 

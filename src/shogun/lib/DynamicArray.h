@@ -1,8 +1,8 @@
 /*
  * This software is distributed under BSD 3-clause license (see LICENSE file).
  *
- * Authors: Soeren Sonnenburg, Evgeniy Andreev, Heiko Strathmann, 
- *          Sergey Lisitsyn, Leon Kuchenbecker, Yuyu Zhang, Thoralf Klein, 
+ * Authors: Soeren Sonnenburg, Evgeniy Andreev, Heiko Strathmann,
+ *          Sergey Lisitsyn, Leon Kuchenbecker, Yuyu Zhang, Thoralf Klein,
  *          Fernando Iglesias, Bjoern Esser
  */
 
@@ -581,7 +581,7 @@ template <class T> class CDynamicArray :public CSGObject
 		 *  @exception ShogunException Will be thrown if an error
 		 *                             occurres.
 		 */
-		virtual void load_serializable_pre() throw (ShogunException)
+		virtual void load_serializable_pre() noexcept(false)
 		{
 			CSGObject::load_serializable_pre();
 
@@ -596,7 +596,7 @@ template <class T> class CDynamicArray :public CSGObject
 		 *  @exception ShogunException Will be thrown if an error
 		 *                             occurres.
 		 */
-		virtual void save_serializable_pre() throw (ShogunException)
+		virtual void save_serializable_pre() noexcept(false)
 		{
 			CSGObject::save_serializable_pre();
 			m_array.resize_array(m_array.get_num_elements(), true);

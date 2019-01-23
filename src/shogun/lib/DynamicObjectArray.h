@@ -430,7 +430,7 @@ class CDynamicObjectArray : public CSGObject
 		 *  @exception ShogunException Will be thrown if an error
 		 *                             occurres.
 		 */
-		virtual void load_serializable_pre() throw (ShogunException)
+		virtual void load_serializable_pre() noexcept(false)
 		{
 			CSGObject::load_serializable_pre();
 
@@ -445,7 +445,7 @@ class CDynamicObjectArray : public CSGObject
 		 *  @exception ShogunException Will be thrown if an error
 		 *                             occurres.
 		 */
-		virtual void save_serializable_pre() throw (ShogunException)
+		virtual void save_serializable_pre() noexcept(false)
 		{
 			CSGObject::save_serializable_pre();
 

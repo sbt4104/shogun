@@ -326,7 +326,7 @@ public:
 	 * @return true if the parameter exists with the input name and type
 	 */
 	template <typename T, typename U = void>
-	bool has(const std::string& name) const throw(ShogunException)
+	bool has(const std::string& name) const noexcept(false)
 	{
 		BaseTag tag(name);
 		if (!has_parameter(tag))
@@ -342,7 +342,7 @@ public:
 	 * @param value value of the parameter
 	 */
 	template <typename T>
-	void put(const Tag<T>& _tag, const T& value) throw(ShogunException)
+	void put(const Tag<T>& _tag, const T& value) noexcept(false)
 	{
 		if (has_parameter(_tag))
 		{
@@ -495,7 +495,7 @@ public:
 	 * @return value of the parameter identified by the input tag
 	 */
 	template <typename T>
-	T get(const Tag<T>& _tag) const throw(ShogunException)
+	T get(const Tag<T>& _tag) const noexcept(false)
 	{
 		const Any value = get_parameter(_tag).get_value();
 		try
@@ -521,7 +521,7 @@ public:
 	 * @return value of the parameter corresponding to the input name and type
 	 */
 	template <typename T, typename U = void>
-	T get(const std::string& name) const throw(ShogunException)
+	T get(const std::string& name) const noexcept(false)
 	{
 		Tag<T> tag(name);
 		return get(tag);
@@ -607,7 +607,7 @@ protected:
 	 *
 	 *  @exception ShogunException will be thrown if an error occurs.
 	 */
-	virtual void load_serializable_pre() throw (ShogunException);
+	virtual void load_serializable_pre() noexcept(false);
 
 	/** Can (optionally) be overridden to post-initialize some member
 	 *  variables which are not PARAMETER::ADD'ed.  Make sure that at
@@ -616,7 +616,7 @@ protected:
 	 *
 	 *  @exception ShogunException will be thrown if an error occurs.
 	 */
-	virtual void load_serializable_post() throw (ShogunException);
+	virtual void load_serializable_post() noexcept(false);
 
 	/** Can (optionally) be overridden to pre-initialize some member
 	 *  variables which are not PARAMETER::ADD'ed.  Make sure that at
@@ -625,7 +625,7 @@ protected:
 	 *
 	 *  @exception ShogunException will be thrown if an error occurs.
 	 */
-	virtual void save_serializable_pre() throw (ShogunException);
+	virtual void save_serializable_pre() noexcept(false);
 
 	/** Can (optionally) be overridden to post-initialize some member
 	 *  variables which are not PARAMETER::ADD'ed.  Make sure that at
@@ -634,7 +634,7 @@ protected:
 	 *
 	 *  @exception ShogunException will be thrown if an error occurs.
 	 */
-	virtual void save_serializable_post() throw (ShogunException);
+	virtual void save_serializable_post() noexcept(false);
 
 	/** Registers a class parameter which is identified by a tag.
 	 * This enables the parameter to be modified by put() and retrieved by
