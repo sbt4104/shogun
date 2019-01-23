@@ -7,10 +7,10 @@
 #ifndef _PIPELINE_H_
 #define _PIPELINE_H_
 
-#include <shogun/base/variant.h>
 #include <shogun/machine/Machine.h>
 #include <shogun/transformer/Transformer.h>
 #include <utility>
+#include <variant>
 
 namespace shogun
 {
@@ -76,7 +76,7 @@ namespace shogun
 		/** Check pipeline is not empty and machine has been added. */
 		void check_pipeline() const;
 
-		std::vector<std::pair<std::string, variant<CTransformer*, CMachine*>>>
+		std::vector<std::pair<std::string, std::variant<CTransformer*, CMachine*>>>
 		    m_stages;
 	};
 
@@ -129,7 +129,7 @@ namespace shogun
 	protected:
 		virtual bool train_machine(CFeatures* data = NULL) override;
 
-		std::vector<std::pair<std::string, variant<CTransformer*, CMachine*>>>
+		std::vector<std::pair<std::string, std::variant<CTransformer*, CMachine*>>>
 		    m_stages;
 		virtual bool train_require_labels() const override;
 

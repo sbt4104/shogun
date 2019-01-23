@@ -17,7 +17,7 @@ namespace shogun
 	{
 		for (auto&& stage : m_stages)
 		{
-			visit([](auto&& object) { SG_UNREF(object) }, stage.second);
+			std::visit([](auto&& object) { SG_UNREF(object) }, stage.second);
 		}
 	}
 
@@ -31,7 +31,7 @@ namespace shogun
 	{
 		REQUIRE_E(
 		    m_stages.empty() ||
-		        holds_alternative<CTransformer*>(m_stages.back().second),
+		        std::holds_alternative<CTransformer*>(m_stages.back().second),
 		    std::invalid_argument,
 		    "Transformers can not be placed after machines. Last element is "
 		    "%s\n",
@@ -53,7 +53,7 @@ namespace shogun
 	{
 		REQUIRE_E(
 		    m_stages.empty() ||
-		        holds_alternative<CTransformer*>(m_stages.back().second),
+		        std::holds_alternative<CTransformer*>(m_stages.back().second),
 		    std::invalid_argument,
 		    "Multiple machines are added to pipeline. Last element is %s\n",
 		    m_stages.back().first.c_str());
@@ -105,7 +105,7 @@ namespace shogun
 		REQUIRE_E(
 		    !m_stages.empty(), InvalidStateException, "Pipeline is empty");
 		REQUIRE_E(
-		    holds_alternative<CMachine*>(m_stages.back().second),
+		    std::holds_alternative<CMachine*>(m_stages.back().second),
 		    InvalidStateException, "Pipline cannot be trained without an "
 		                           "added machine. Last element "
 		                           "is %s.\n",
@@ -120,7 +120,7 @@ namespace shogun
 	{
 		for (auto&& stage : m_stages)
 		{
-			visit([](auto&& object) { SG_UNREF(object) }, stage.second);
+			std::visit([](auto&& object) { SG_UNREF(object) }, stage.second);
 		}
 	}
 
@@ -133,9 +133,9 @@ namespace shogun
 
 		for (auto&& stage : m_stages)
 		{
-			if (holds_alternative<CTransformer*>(stage.second))
+			if (std::holds_alternative<CTransformer*>(stage.second))
 			{
-				auto transformer = shogun::get<CTransformer*>(stage.second);
+				auto transformer = std::get<CTransformer*>(stage.second);
 				transformer->train_require_labels()
 				    ? transformer->fit(data, m_labels)
 				    : transformer->fit(data);
@@ -144,7 +144,7 @@ namespace shogun
 			}
 			else
 			{
-				auto machine = shogun::get<CMachine*>(stage.second);
+				auto machine = std::get<CMachine*>(stage.second);
 				if (machine->train_require_labels())
 					machine->set_labels(m_labels);
 				machine->train(data);
@@ -157,14 +157,14 @@ namespace shogun
 	{
 		for (auto&& stage : m_stages)
 		{
-			if (holds_alternative<CTransformer*>(stage.second))
+			if (std::holds_alternative<CTransformer*>(stage.second))
 			{
-				auto transformer = shogun::get<CTransformer*>(stage.second);
+				auto transformer = std::get<CTransformer*>(stage.second);
 				data = transformer->transform(data);
 			}
 			else
 			{
-				auto machine = shogun::get<CMachine*>(stage.second);
+				auto machine = std::get<CMachine*>(stage.second);
 				return machine->apply(data);
 			}
 		}
@@ -178,7 +178,7 @@ namespace shogun
 
 		for (auto&& stage : m_stages)
 		{
-			visit(
+			std::visit(
 			    [&require_labels](auto&& fittable) {
 				    require_labels = fittable->train_require_labels();
 				},
@@ -208,8 +208,8 @@ namespace shogun
 		for (auto&& stage : m_stages)
 		{
 			if (stage.first == name &&
-			    holds_alternative<CTransformer*>(stage.second))
-				return shogun::get<CTransformer*>(stage.second);
+			    std::holds_alternative<CTransformer*>(stage.second))
+				return std::get<CTransformer*>(stage.second);
 		}
 
 		SG_THROW(
@@ -221,7 +221,7 @@ namespace shogun
 
 	CMachine* CPipeline::get_machine() const
 	{
-		return shogun::get<CMachine*>(m_stages.back().second);
+		return std::get<CMachine*>(m_stages.back().second);
 	}
 
 	void CPipeline::set_store_model_features(bool store_model)
@@ -239,7 +239,7 @@ namespace shogun
 		auto result = CMachine::clone()->as<CPipeline>();
 		for (auto&& stage : m_stages)
 		{
-			visit(
+			std::visit(
 			    [&](auto object) {
 				    result->m_stages.emplace_back(
 				        stage.first,
