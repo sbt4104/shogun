@@ -294,8 +294,8 @@ void CKernel::get_kernel_row(
 // Fills cache for the row m
 void CKernel::cache_kernel_row(int32_t m)
 {
-	register int32_t j,k,l;
-	register KERNELCACHE_ELEM *cache;
+	int32_t j,k,l;
+	KERNELCACHE_ELEM *cache;
 
 	int32_t num_vectors = get_num_vec_lhs();
 
@@ -466,7 +466,7 @@ void CKernel::kernel_cache_shrink(
 	int32_t totdoc, int32_t numshrink, int32_t *after)
 {
 	ASSERT(totdoc > 0);
-	register int32_t i,j,jj,scount;     // 0 in after.
+	int32_t i,j,jj,scount;     // 0 in after.
 	KERNELCACHE_IDX from=0,to=0;
 	int32_t *keep;
 
@@ -572,7 +572,7 @@ void CKernel::kernel_cache_free(int32_t cacheidx)
 // element
 int32_t CKernel::kernel_cache_free_lru()
 {
-  register int32_t k,least_elem=-1,least_time;
+  int32_t k,least_elem=-1,least_time;
 
   least_time=kernel_cache.time+1;
   for(k=0;k<kernel_cache.max_elems;k++) {
