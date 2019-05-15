@@ -30,6 +30,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <shogun/util/clone.h>
 
 /** \namespace shogun
  * @brief all of classes and functions are contained in the shogun namespace
@@ -1317,9 +1318,12 @@ template <class T>
 void CSGObject::observe(const int64_t step, const std::string& name) const
 {
 	auto param = this->get_parameter(BaseTag(name));
+	auto cloned = any_cast<T>(param.get_value());
 	auto obs = some<ObservedValueTemplated<T>>(
-		step, name, any_cast<T>(param.get_value()), param.get_properties());
+		step, name, static_cast<T>(clone_utils::clone(cloned)), param.get_properties());
 	this->observe(obs);
 }
+
+
 }
 #endif // __SGOBJECT_H__
